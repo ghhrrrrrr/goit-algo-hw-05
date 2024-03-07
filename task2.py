@@ -1,13 +1,11 @@
+
 import re
+from typing import Callable
 
-def generator_numbers(string=""):
-    numbers = re.findall(r'/-?\b\d+[.]\d+\b', string)
+def generator_numbers(text: str):
+    for number in re.findall(r'/-?\b\d+[.]\d+\b', text):
+        yield float(number)
 
-    for number in numbers:
-        yield int(number)
-
-def sum_profit(string):
-    total_profit = sum(generator_numbers(string))
-    return total_profit
-
-print(sum_profit('Загальний дохід працівника складається з декількох частин: 1000.01 як основний дохід, доповнений додатковими надходженнями 27.45 і 324.00 доларів'))
+def sum_profit(text: str, func: Callable):
+    total = sum(func(text))
+    return total
